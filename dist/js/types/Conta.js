@@ -1,8 +1,9 @@
-import { TipoTransacao } from "./TipoTransacao";
+import { Armazenador } from "./Amazenador.js";
+import { TipoTransacao } from "./TipoTransacao.js";
 export class Conta {
     nome;
-    saldo = JSON.parse(localStorage.getItem("saldo")) || 0;
-    transacoes = JSON.parse(localStorage.getItem("transacoes"), (key, value) => {
+    saldo = Armazenador.obter("saldo") || 0;
+    transacoes = Armazenador.obter(("transacoes"), (key, value) => {
         if (key === "data") {
             return new Date(value);
         }
@@ -10,6 +11,9 @@ export class Conta {
     }) || [];
     constructor(nome) {
         this.nome = nome;
+    }
+    getTitular() {
+        return this.nome;
     }
     getGruposTransacoes() {
         const gruposTransacoes = [];
